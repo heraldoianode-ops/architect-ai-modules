@@ -1,0 +1,29 @@
+{
+  "_meta": {
+    "file": "meta.json",
+    "framework_version": "2.2.0",
+    "repo": "https://github.com/heraldoianode-ops/architect-ai-modules",
+    "description_es": "Meta-aprendizaje nivel 2. Patrones entre todos los proyectos de la SaaS.",
+    "description_en": "Level 2 meta-learning. Patterns across all SaaS projects.",
+    "activation_condition_es": "Activo desde el segundo proyecto.",
+    "activation_condition_en": "Active from the second project."
+  },
+  "active": false,
+  "projects_tracked": [],
+  "universal_debts": [],
+  "most_reused_modules": [],
+  "underestimated_phases": [],
+  "preventive_checks": [],
+  "categories": {
+    "auth":     "Autenticación y autorización / Authentication and authorization",
+    "email":    "Correo transaccional y templates / Transactional email and templates",
+    "payments": "Pagos y suscripciones / Payments and subscriptions",
+    "database": "Queries, migraciones, helpers de BD / DB queries, migrations, helpers",
+    "api":      "Middlewares, validación, respuestas API / Middlewares, validation, API responses",
+    "ui":       "Componentes reutilizables / Reusable components",
+    "utils":    "Utilidades generales / General utilities",
+    "devops":   "Scripts de deploy, CI/CD / Deploy scripts, CI/CD",
+    "windows":  "Específico para apps de escritorio Windows / Windows desktop app specific"
+  },
+  "module_registry": []
+}
