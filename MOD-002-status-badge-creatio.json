@@ -1,0 +1,27 @@
+{
+  "_meta": {
+    "id": "MOD-002",
+    "name": "status-badge-creatio",
+    "version": "1.0.0",
+    "published_from": "asistente-real-state",
+    "published_at": "2026-06-09",
+    "description_es": "Componente StatusBadge estilo Creatio. Variantes: active (verde), inactive (rojo), pending (naranja). Usa CSS custom properties para tematización. Incluye data-testid para tests E2E.",
+    "description_en": "Creatio-style StatusBadge component. Variants: active (green), inactive (red), pending (orange). Uses CSS custom properties for theming. Includes data-testid for E2E tests.",
+    "tags": ["ui", "component", "design-system", "creatio", "react"],
+    "stack": "React + Tailwind CSS"
+  },
+  "dependencies": {
+    "npm": []
+  },
+  "css_vars_required": [
+    "--status-active-bg", "--status-active-fg",
+    "--status-inactive-bg", "--status-inactive-fg",
+    "--status-pending-bg", "--status-pending-fg"
+  ],
+  "files": {
+    "src/components/StatusBadge.tsx": "interface StatusBadgeProps {\n  label: string\n  variant?: 'active' | 'inactive' | 'pending' | 'auto'\n  active?: boolean\n}\n\nexport function StatusBadge({ label, variant, active }: StatusBadgeProps) {\n  const resolved = variant ?? (active ? 'active' : 'inactive')\n\n  const styles: Record<string, string> = {\n    active: 'bg-[hsl(var(--status-active-bg))] text-[hsl(var(--status-active-fg))]',\n    inactive: 'bg-[hsl(var(--status-inactive-bg))] text-[hsl(var(--status-inactive-fg))]',\n    pending: 'bg-[hsl(var(--status-pending-bg))] text-[hsl(var(--status-pending-fg))]',\n  }\n\n  return (\n    <span\n      data-testid={`badge-${label}`}\n      className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${\n        styles[resolved] ?? styles.inactive\n      }`}\n    >\n      {label}\n    </span>\n  )\n}\n",
+    "css/status-tokens.css": "/* Paste into globals.css :root block */\n--status-active-bg: 142 60% 92%;\n--status-active-fg: 142 60% 28%;\n--status-inactive-bg: 0 84% 94%;\n--status-inactive-fg: 0 72% 40%;\n--status-pending-bg: 38 92% 92%;\n--status-pending-fg: 38 80% 32%;\n"
+  },
+  "usage_es": "<StatusBadge label='Activo' active />\n<StatusBadge label='Inactivo' active={false} />\n<StatusBadge label='Pendiente' variant='pending' />\n\nVariant 'auto' resuelve según prop active (boolean).",
+  "usage_en": "<StatusBadge label='Active' active />\n<StatusBadge label='Inactive' active={false} />\n<StatusBadge label='Pending' variant='pending' />\n\nVariant 'auto' resolves from active boolean prop."
+}

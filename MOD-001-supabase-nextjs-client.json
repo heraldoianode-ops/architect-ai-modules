@@ -1,0 +1,29 @@
+{
+  "_meta": {
+    "id": "MOD-001",
+    "name": "supabase-nextjs-client",
+    "version": "1.0.0",
+    "published_from": "asistente-real-state",
+    "published_at": "2026-06-09",
+    "description_es": "Cliente Supabase para Next.js 14 App Router. Browser client + Server client (SSR cookies) + Middleware de refresco de sesión. Soporte de schema personalizado.",
+    "description_en": "Supabase client for Next.js 14 App Router. Browser client + Server client (SSR cookies) + Session refresh middleware. Custom schema support.",
+    "tags": ["supabase", "nextjs", "auth", "ssr"],
+    "stack": "Next.js 14 + @supabase/ssr"
+  },
+  "dependencies": {
+    "npm": ["@supabase/supabase-js@^2.44.2", "@supabase/ssr@^0.3.0"]
+  },
+  "env_vars": [
+    "NEXT_PUBLIC_SUPABASE_URL",
+    "NEXT_PUBLIC_SUPABASE_ANON_KEY"
+  ],
+  "files": {
+    "src/lib/supabase.ts": "import { createBrowserClient } from '@supabase/ssr'\n\nexport function createClient(schema = 'public') {\n  return createBrowserClient(\n    process.env.NEXT_PUBLIC_SUPABASE_URL!,\n    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,\n    { db: { schema } }\n  )\n}\n",
+    "src/lib/supabase-server.ts": "import { createServerClient } from '@supabase/ssr'\nimport { cookies } from 'next/headers'\n\nexport function createServerSupabaseClient(schema = 'public') {\n  const cookieStore = cookies()\n  return createServerClient(\n    process.env.NEXT_PUBLIC_SUPABASE_URL!,\n    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,\n    {\n      db: { schema },\n      cookies: {\n        get(name: string) { return cookieStore.get(name)?.value },\n        set(name: string, value: string, options: Record<string, unknown>) {\n          cookieStore.set({ name, value, ...options })\n        },\n        remove(name: string, options: Record<string, unknown>) {\n          cookieStore.set({ name, value: '', ...options })\n        },\n      },\n    }\n  )\n}\n",
+    "src/middleware.ts": "import { createServerClient } from '@supabase/ssr'\nimport { NextResponse, type NextRequest } from 'next/server'\n\nexport async function middleware(request: NextRequest) {\n  let response = NextResponse.next({ request: { headers: request.headers } })\n  const supabase = createServerClient(\n    process.env.NEXT_PUBLIC_SUPABASE_URL!,\n    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,\n    {\n      cookies: {\n        get(name: string) { return request.cookies.get(name)?.value },\n        set(name: string, value: string, options: Record<string, unknown>) {\n          request.cookies.set({ name, value, ...options } as Parameters<typeof request.cookies.set>[0])\n          response = NextResponse.next({ request: { headers: request.headers } })\n          response.cookies.set({ name, value, ...options } as Parameters<typeof response.cookies.set>[0])\n        },\n        remove(name: string, options: Record<string, unknown>) {\n          request.cookies.set({ name, value: '', ...options } as Parameters<typeof request.cookies.set>[0])\n          response = NextResponse.next({ request: { headers: request.headers } })\n          response.cookies.delete(name)\n        },\n      },\n    }\n  )\n  await supabase.auth.getSession()\n  return response\n}\n\nexport const config = {\n  matcher: ['/((?!_next/static|_next/image|favicon.ico|.*\\\\.(?:svg|png|jpg|jpeg|gif|webp)$).*)'],\n}\n",
+    "src/lib/auth.ts": "import { createClient } from './supabase'\n\nexport async function signIn(email: string, password: string) {\n  const supabase = createClient()\n  const { data, error } = await supabase.auth.signInWithPassword({ email, password })\n  if (error) throw new Error(error.message)\n  return data\n}\n\nexport async function signOut() {\n  const supabase = createClient()\n  await supabase.auth.signOut()\n}\n\nexport async function getSession() {\n  const supabase = createClient()\n  const { data: { session } } = await supabase.auth.getSession()\n  return session\n}\n",
+    "src/hooks/useCurrentUser.ts": "'use client'\nimport { useEffect, useState } from 'react'\nimport { createClient } from '@/lib/supabase'\n\ntype AppUser = { id: string; email: string; full_name: string | null; role: string; is_active: boolean }\n\nexport function useCurrentUser(schema = 'public', usersTable = 'users') {\n  const [user, setUser] = useState<AppUser | null>(null)\n  const [loading, setLoading] = useState(true)\n\n  useEffect(() => {\n    const supabase = createClient(schema)\n    supabase.auth.getUser().then(async ({ data: { user: authUser } }) => {\n      if (!authUser) { setLoading(false); return }\n      const { data } = await supabase\n        .from(usersTable)\n        .select('id, email, full_name, role, is_active')\n        .eq('auth_user_id', authUser.id)\n        .single()\n      setUser(data as AppUser | null)\n      setLoading(false)\n    })\n  }, [schema, usersTable])\n\n  return { user, loading, isAdmin: user?.role === 'admin' }\n}\n"
+  },
+  "usage_es": "INSTALAR: npm install @supabase/supabase-js @supabase/ssr\nCopiar los archivos de src/ al proyecto.\nConfigurar las env vars NEXT_PUBLIC_SUPABASE_URL y NEXT_PUBLIC_SUPABASE_ANON_KEY.\nEn createClient() pasar el schema custom si aplica: createClient('mi_schema').",
+  "usage_en": "INSTALL: npm install @supabase/supabase-js @supabase/ssr\nCopy files from src/ to project.\nSet env vars NEXT_PUBLIC_SUPABASE_URL and NEXT_PUBLIC_SUPABASE_ANON_KEY.\nPass custom schema to createClient() if needed: createClient('my_schema')."
+}
