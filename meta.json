@@ -8,14 +8,21 @@
     "activation_condition_en": "Activate when the second project starts on the same framework."
   },
   "active": true,
-  "projects_tracked": ["asistente-real-state"],
+  "projects_tracked": [
+    "asistente-real-state"
+  ],
   "module_registry": [
     {
       "id": "MOD-001",
       "name": "supabase-nextjs-client",
       "version": "1.0.0",
-      "file": "MOD-001-supabase-nextjs-client.json",
-      "tags": ["supabase", "nextjs", "auth", "ssr"],
+      "file": "database/MOD-001-supabase-nextjs-client.json",
+      "tags": [
+        "supabase",
+        "nextjs",
+        "auth",
+        "ssr"
+      ],
       "published_from": "asistente-real-state",
       "published_at": "2026-06-09"
     },
@@ -23,8 +30,13 @@
       "id": "MOD-002",
       "name": "status-badge-creatio",
       "version": "1.0.0",
-      "file": "MOD-002-status-badge-creatio.json",
-      "tags": ["ui", "component", "design-system", "creatio"],
+      "file": "ui/MOD-002-status-badge-creatio.json",
+      "tags": [
+        "ui",
+        "component",
+        "design-system",
+        "creatio"
+      ],
       "published_from": "asistente-real-state",
       "published_at": "2026-06-09"
     },
@@ -32,14 +44,25 @@
       "id": "MOD-003",
       "name": "sidebar-creatio",
       "version": "1.0.0",
-      "file": "MOD-003-sidebar-creatio.json",
-      "tags": ["ui", "navigation", "sidebar", "design-system", "creatio", "rbac"],
+      "file": "ui/MOD-003-sidebar-creatio.json",
+      "tags": [
+        "ui",
+        "navigation",
+        "sidebar",
+        "design-system",
+        "creatio",
+        "rbac"
+      ],
       "published_from": "asistente-real-state",
       "published_at": "2026-06-09"
     }
   ],
   "universal_debts": [],
-  "most_reused_modules": ["MOD-001", "MOD-002", "MOD-003"],
+  "most_reused_modules": [
+    "MOD-001",
+    "MOD-002",
+    "MOD-003"
+  ],
   "underestimated_phases": [
     {
       "phase_type_es": "migración de arquitectura",
