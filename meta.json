@@ -11,6 +11,19 @@
   "projects_tracked": [
     "asistente-real-state"
   ],
+  "templates": {
+    "dir": "templates/",
+    "note_es": "Esqueletos canónicos. Inspeccionar y replicar al crear módulo/dominio nuevo (regla R20).",
+    "note_en": "Canonical skeletons. Inspect and replicate when creating a new module/domain (rule R20).",
+    "available": [
+      {
+        "id": "DOM-TEMPLATE",
+        "name": "ddd-domain-skeleton",
+        "file": "templates/DOM-TEMPLATE-ddd-domain.json",
+        "tags": ["ddd", "domain", "template", "connectors", "secure-key-broker", "skills"]
+      }
+    ]
+  },
   "module_registry": [
     {
       "id": "MOD-001",
