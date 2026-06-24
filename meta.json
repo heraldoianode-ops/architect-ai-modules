@@ -1,20 +1,11 @@
 {
-  "_meta": {
-    "file": "meta.json",
-    "location": "__MODULE_LIBRARY__/meta.json",
-    "description_es": "Meta-aprendizaje nivel 2 — patrones detectados entre todos los proyectos de la SaaS. Se activa con el segundo proyecto.",
-    "description_en": "Level 2 meta-learning — patterns detected across all SaaS projects. Activated with the second project.",
-    "activation_condition_es": "Activar cuando el segundo proyecto inicia en el mismo framework.",
-    "activation_condition_en": "Activate when the second project starts on the same framework."
-  },
   "active": true,
   "projects_tracked": [
     "asistente-real-state"
   ],
   "templates": {
     "dir": "templates/",
-    "note_es": "Esqueletos canónicos. Inspeccionar y replicar al crear módulo/dominio nuevo (regla R20).",
-    "note_en": "Canonical skeletons. Inspect and replicate when creating a new module/domain (rule R20).",
+    "note": "Canonical skeletons. Inspect and replicate when creating a new module/domain (rule R20).",
     "available": [
       {
         "id": "DOM-TEMPLATE",
@@ -30,12 +21,7 @@
       "name": "supabase-nextjs-client",
       "version": "1.0.0",
       "file": "database/MOD-001-supabase-nextjs-client.json",
-      "tags": [
-        "supabase",
-        "nextjs",
-        "auth",
-        "ssr"
-      ],
+      "tags": ["supabase", "nextjs", "auth", "ssr"],
       "published_from": "asistente-real-state",
       "published_at": "2026-06-09"
     },
@@ -44,12 +30,7 @@
       "name": "status-badge-creatio",
       "version": "1.0.0",
       "file": "ui/MOD-002-status-badge-creatio.json",
-      "tags": [
-        "ui",
-        "component",
-        "design-system",
-        "creatio"
-      ],
+      "tags": ["ui", "component", "design-system", "creatio"],
       "published_from": "asistente-real-state",
       "published_at": "2026-06-09"
     },
@@ -58,38 +39,25 @@
       "name": "sidebar-creatio",
       "version": "1.0.0",
       "file": "ui/MOD-003-sidebar-creatio.json",
-      "tags": [
-        "ui",
-        "navigation",
-        "sidebar",
-        "design-system",
-        "creatio",
-        "rbac"
-      ],
+      "tags": ["ui", "navigation", "sidebar", "design-system", "creatio", "rbac"],
       "published_from": "asistente-real-state",
       "published_at": "2026-06-09"
     }
   ],
   "universal_debts": [],
-  "most_reused_modules": [
-    "MOD-001",
-    "MOD-002",
-    "MOD-003"
-  ],
+  "most_reused_modules": ["MOD-001", "MOD-002", "MOD-003"],
   "underestimated_phases": [
     {
-      "phase_type_es": "migración de arquitectura",
-      "phase_type_en": "architecture migration",
+      "phase_type": "architecture migration",
       "avg_estimate_days": 2,
       "avg_real_days": 4,
       "adjustment_factor": 2.0,
-      "note_es": "Migrar backend a serverless (Supabase EF) + rediseño UI toma el doble de lo estimado",
-      "note_en": "Migrating backend to serverless (Supabase EF) + UI redesign takes twice the estimate"
+      "note": "Migrating backend to serverless (Supabase EF) + UI redesign takes twice the estimate"
     }
   ],
   "preventive_checks": [
-    "Verificar que todas las páginas que usan FastAPI/axios sean migradas a supabase-js antes de declarar un nodo COMPLETE",
-    "Verificar que las rutas del Sidebar coincidan con las rutas reales de las páginas",
-    "Marcar decisiones SUPERSEDED cuando se cambia de tecnología base (Celery → Edge Fn, Docker → Netlify)"
+    "Verify all pages using FastAPI/axios are migrated to supabase-js before declaring node COMPLETE",
+    "Verify Sidebar routes match actual page routes",
+    "Mark decisions SUPERSEDED when changing base technology (Celery → Edge Fn, Docker → Netlify)"
   ]
 }
